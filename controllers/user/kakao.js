@@ -3,7 +3,6 @@ const { user } = require("../../models");
 
 module.exports = async (req, response) => {
   const code = req.query.code;
-  console.log(req.query.code);
   await axios
     .post(
       "https://kauth.kakao.com/oauth/token",
@@ -47,10 +46,8 @@ module.exports = async (req, response) => {
               username: nickname,
               email,
             });
-            console.log("newUser : ", newUser);
             response.send({ ...newUser, accessToken });
           } else {
-            console.log("existingUser : ", existingUser);
             response.send({ ...existingUser, accessToken });
           }
         })
