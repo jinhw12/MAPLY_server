@@ -13,8 +13,6 @@ module.exports = async (req, res) => {
 
   const newPlaylist = await playlist.create({ playlist_name, user_id });
   const newVideo = await video.create({ title, thumbnail, video_id });
-  console.log(newPlaylist);
-  console.log(newVideo);
 
   res.json("ok");
 };
