@@ -13,5 +13,7 @@ module.exports = (req, res) => {
       }
     )
     .then((result) => res.send(result.data))
-    .catch((error) => console.log({ error: error.response }));
+    .catch((error) => {
+      res.send({ code: error.response.data }); // -401
+    });
 };
