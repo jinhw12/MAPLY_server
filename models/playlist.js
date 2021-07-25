@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.playlist.belongsTo(models.user, {
         foreignKey: "user_id",
-        onDelete: "CASCADE",
       });
       models.playlist.hasMany(models.video, {
         foreignKey: "playlist_id",

@@ -2,17 +2,20 @@ const { video, playlist, user } = require("../../models");
 
 module.exports = async (req, res) => {
   const { email, playlist_name, title, thumbnail, video_id } = req.body;
-  const user_id = await user.findOne({ where: email }).catch(err => console.log(err));
+  const foundUser = await user.findOne({ where: { email } });
+  const user_id = foundUser.id;
 
   if (!user_id) {
-    res.send(401).send("Please Log In");
+    return res.status(401).send("Please sign in");
   }
   else if (!title || !playlist_name || !thumbnail || !video_id) {
-    res.send(400).send("Need More Information");
+    return res.status(403).send("Need more information");
   }
 
   const newPlaylist = await playlist.create({ playlist_name, user_id });
-  const newVideo = await video.create({ title, thumbnail, video_id });
+  const playlist_id = newPlaylist.id;
+  const newVideo = await video.create({ title, thumbnail, video_id, playlist_id });
 
-  res.json("ok");
+  res.send(`playlist created! playlist : { id : ${playlist_id} , name : "${playlist_name}" }. 
+  video added : { id : ${newVideo.id}, title : "${title}", video_id : "${video_id}", thumbnail : "${thumbnail}" }`)
 };
