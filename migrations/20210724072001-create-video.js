@@ -18,7 +18,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       playlist_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'playlists',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

@@ -1,11 +1,14 @@
-const models = require("../../models");
+const { playlist } = require("../../models");
 
-module.exports = (req, res) => {
-  models.playlist.delete(req.params.playlist_id, (error, result) => {
-    if (!error) {
-      res.send(result);
-    } else {
-      res.status(404).send(error);
-    }
-  });
+module.exports = async (req, res) => {
+  const { playlist_id } = req.params;
+
+  if (!playlist_id) {
+    res.status(400).send("Invalid playlist ID")
+  } else {
+    const deletedPlaylist = await playlist.destroy({
+      where: { id: playlist_id }
+    })
+    res.send(`Deleted successfully. Deleted playlist : { id : ${deletedPlaylist} }`)
+  }
 };
