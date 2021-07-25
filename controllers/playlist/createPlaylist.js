@@ -6,10 +6,10 @@ module.exports = async (req, res) => {
   const user_id = foundUser.id;
 
   if (!user_id) {
-    res.status(401).send("Please sign in");
+    return res.status(401).send("Please sign in");
   }
   else if (!title || !playlist_name || !thumbnail || !video_id) {
-    res.status(400).send("Need more information");
+    return res.status(403).send("Need more information");
   }
 
   const newPlaylist = await playlist.create({ playlist_name, user_id });

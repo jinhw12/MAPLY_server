@@ -4,11 +4,12 @@ module.exports = async (req, res) => {
   const { user_id } = req.params;
 
   if (!user_id) {
-    res.status(401).send("Please sign in");
+    return res.status(401).send("Please sign in");
   }
+  
   const myPlaylists = await playlist.findAll({ where: { user_id } });
   if (myPlaylists.length === 0) {
-    res.send([]);
+    return res.send([]);
   }
 
   let refinedData = myPlaylists.map(async (each) => {
