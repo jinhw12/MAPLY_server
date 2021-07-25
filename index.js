@@ -5,19 +5,27 @@ const app = express();
 const userRouter = require("./routes/user");
 const playlistRouter = require("./routes/playlist");
 const videoRouter = require("./routes/video");
+const { checkToken } = require("./middlewares/checkToken")
 
 require("dotenv").config();
 const port = process.env.PORT || 4000;
 
-app.use(cors());
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.use(cors(
+  {
+    origin: [`${process.env.REACT_APP_CLIENT}`],
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+  }
+));
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use(checkToken);
 
 app.use("/user", userRouter);
 app.use("/playlist", playlistRouter);
