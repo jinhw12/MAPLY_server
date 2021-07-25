@@ -6,4 +6,5 @@ module.exports = {
   deletePlaylist: require("./playlist/deletePlaylist"),
   createVideo: require("./video/createVideo"),
   deleteVideo: require("./video/deleteVideo"),
+  getVideo: require("./video/getVideo"),
 };

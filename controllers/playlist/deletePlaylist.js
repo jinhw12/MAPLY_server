@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
     const deletedPlaylist = await playlist.destroy({
       where: { id: playlist_id }
     })
+
     res.send(`Deleted successfully. Deleted playlist : { id : ${deletedPlaylist} }`)
   }
 };

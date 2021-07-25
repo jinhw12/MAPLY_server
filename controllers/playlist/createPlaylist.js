@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     res.status(401).send("Please sign in");
   }
   else if (!title || !playlist_name || !thumbnail || !video_id) {
-    res.status(400).send("Need More Information");
+    res.status(400).send("Need more information");
   }
 
   const newPlaylist = await playlist.create({ playlist_name, user_id });
