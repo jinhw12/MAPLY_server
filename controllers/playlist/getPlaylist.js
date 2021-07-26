@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   if (!user_id) {
     return res.status(401).send("Please sign in");
   }
-  
+
   const myPlaylists = await playlist.findAll({ where: { user_id } });
   if (myPlaylists.length === 0) {
     return res.send([]);
@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     const { id, playlist_name } = each.dataValues;
     const firstVideo = await video.findOne({ where: { playlist_id: id } });
     const count = await video.count({ where: { playlist_id: id } });
-    return { id, playlist_name, count, playlist_thumnail: firstVideo !== null ? firstVideo.thumbnail : "empty" };
+    return { id, playlist_name, count, playlist_thumbnail: firstVideo !== null ? firstVideo.thumbnail : "empty" };
   });
 
   refinedData = await Promise.all(refinedData)

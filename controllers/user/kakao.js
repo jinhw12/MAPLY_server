@@ -46,9 +46,9 @@ module.exports = async (req, response) => {
               username: nickname,
               email,
             });
-            response.send({ ...newUser, accessToken });
+            response.send({ dataValues: { ...newUser.dataValues, accessToken } });
           } else {
-            response.send({ ...existingUser, accessToken });
+            response.send({ dataValues: { ...existingUser.dataValues, accessToken } });
           }
         })
         .catch((err) => console.log(err));
