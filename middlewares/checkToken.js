@@ -6,12 +6,10 @@ module.exports = {
         if (path === "user") {
             next();
         } else {
-            const authorization = req.headers['authorization'];
-            if (!authorization) {
-                res.json({ data: null, message: "Invalid access token" });
-            } else {
+            try {
+                const authorization = req.headers['authorization'];
                 const accessToken = authorization.split(' ')[1];
-                const tokenValidation = await axios.get(
+                await axios.get(
                     "https://kapi.kakao.com/v1/user/access_token_info",
                     {
                         headers: {
@@ -20,11 +18,9 @@ module.exports = {
                         },
                         withCredentials: true
                     })
-                if (tokenValidation.status !== 200) {
-                    res.json({ data: null, token_error: "Invalid access token" });
-                } else {
-                    next();
-                }
+                next();
+            } catch (err) {
+                res.send({ error_code: 401, message: "Invalid access token" });
             }
         }
     }
