@@ -12,12 +12,22 @@ let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
+  // Deploy 설정
+  // sequelize = new Sequelize(config.database, config.username, config.password, {
+  //   host: process.env.DATABASE_HOST,
+  //   port: process.env.DATABASE_PORT,
+  //   logging: console.log,
+  //   maxConcurrentQueries: 100,
+  //   dialect: 'mysql',
+  //   dialectOptions: {
+  //       ssl:'Amazon RDS'
+  //   },
+  //   pool: { maxConnections: 5, maxIdleTime: 30},
+  //   language: 'en'
+  // });
+
+  // Local 설정
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs.readdirSync(__dirname)
